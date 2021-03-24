@@ -3,12 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import Amplify, {API, graphqlOperation, Storage} from 'aws-amplify';
 import awsconfig from './aws-exports';
-import {AmplifySignOut, withAuthenticator} from '@aws-amplify/ui-react'
-import {listPictures} from './graphql/queries';
+
 import { useEffect, useState } from 'react';
 import {BrowserRouter,Switch,Route,Link} from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./components/Header"
+import MyPosts from "./pages/MyPosts"
 Amplify.configure(awsconfig);
 
 
@@ -41,4 +41,4 @@ function App() {
   );
 }
 
-export default withAuthenticator(App);
+export default App;

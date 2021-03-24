@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import picCard from '../components/picCard';
 import {listPictures} from './graphql/queries';
+
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
 export default function Home (porps){
     const [piclist, setPiclist] = useState([])
     useEffect(()=>{
@@ -21,7 +27,7 @@ export default function Home (porps){
         <div className={classes.root}>
             <GridList cellHeight={180} className={classes.gridList}>
             <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }}>
-                <ListSubheader component="div">December</ListSubheader>
+                <ListSubheader component="div">All pictures</ListSubheader>
             </GridListTile>
             {piclist.map((tile) => (
                 <GridListTile key={tile.img}>
