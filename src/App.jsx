@@ -1,5 +1,4 @@
  // eslint-disable-next-line
-import logo from './logo.svg';
 import './App.css';
 import Amplify, {API, graphqlOperation, Storage} from 'aws-amplify';
 import awsconfig from './aws-exports';
