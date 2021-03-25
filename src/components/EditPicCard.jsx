@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import {Auth, graphqlOperation, API, Storage} from 'aws-amplify';
 const useStyles = makeStyles({
     root: {
       maxWidth: 345,
@@ -16,7 +16,6 @@ const useStyles = makeStyles({
 
 export default function(props){
     const classes = useStyles();
-    console.log(props);
 
     return (
       <Card className={classes.root}>
@@ -32,9 +31,7 @@ export default function(props){
             <Typography gutterBottom variant="h5" component="h2">
               {props.title}
             </Typography>
-            <Typography variant="body2" color="secondary" component="p">
-               by {props.owner}
-            </Typography>
+
           </CardContent>
         </CardActionArea>
         <CardActions>

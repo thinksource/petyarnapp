@@ -46,16 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 function MyPosts(props){
 
-  const customStyles = {
-    content : {
-      top                   : '30%',
-      left                  : '50%',
-      right                 : '40%',
-      bottom                : '40%',
-      marginRight           : '-40%',
-      transform             : 'translate(-60%, -40%)'
-    }
-  };
+
     const classes = useStyles();
     const ref = createRef();
     const [piclist, setPiclist] = useState([]);
@@ -119,13 +110,13 @@ function MyPosts(props){
               </ReactModal>
             </div>
             <div className={classes.root}>
-            <GridList cellHeight={180} className={classes.gridList}>
+            <GridList cellHeight={250} className={classes.gridList}>
             <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }}>
                 <h4>My upload pictures</h4>
             </GridListTile>
             {piclist.map((tile) => (
                 <GridListTile key={tile.id}>
-                <EditPicCard src={tile.src} tile={tile.title} owner={tile.owner} />
+                <EditPicCard src={tile.src} title={tile.title} owner={tile.owner} />
                 </GridListTile>
             ))}
             </GridList>
