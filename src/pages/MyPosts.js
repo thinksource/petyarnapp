@@ -13,7 +13,7 @@ import { Auth } from 'aws-amplify';
 // import Modal from '@material-ui/core/Modal';
 import Modal from 'react-modal';
 
-import editPicCard from '../components/editPicCard';
+import EditPicCard from '../components/EditPicCard';
 import UpPicForm from '../components/UpPicForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +53,7 @@ function MyPosts(props){
       right                 : '40%',
       bottom                : '40%',
       marginRight           : '-40%',
-      transform             : 'translate(-50%, -50%)'
+      transform             : 'translate(-60%, -40%)'
     }
   };
     const classes = useStyles();
@@ -85,6 +85,11 @@ function MyPosts(props){
           const picturelist = pictureData.data.listPictures.items;
           
           console.log('picture list', picturelist);
+          picturelist.map(async (p)=>{
+            const fileAccessURL = await Storage.get(p.filepath);
+            console.log(fileAccessURL);
+            p.src=fileAccessURL;
+          });
           setPiclist(picturelist);
         }catch(error){
           console.log('error on fetching picture', error)
@@ -111,7 +116,7 @@ function MyPosts(props){
             </GridListTile>
             {piclist.map((tile) => (
                 <GridListTile key={tile.img}>
-                <editPicCard src={tile.filepath} tile={tile.title} owner={tile.owner} />
+                <EditPicCard src={tile.src} tile={tile.title} owner={tile.owner} />
                 </GridListTile>
             ))}
             </GridList>

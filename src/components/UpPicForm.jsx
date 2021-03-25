@@ -33,27 +33,27 @@ export default function({onUpload, hiddenvalue}){
     const [modalStyle] = useState(getModalStyle);
     const [imgData, setImgData] = useState();
     const uploadImg = async ()=>{
-
-        const pic = imgData;
-        const title = document.getElementById('title').value;
-        const tokens = await Auth.currentSession();
-        const userName = tokens.getIdToken().payload['cognito:username']
-        console.log(pic);
-        console.log(pic.length);
-        const filename = title+'_'+userName+'.'+pic[0].type.split('\/')[1]
-        console.log(filename);
-        const { key } = await Storage.put(filename, pic, {contentType: pic.type});
-        console.log(key);
-        const imageInput ={
-            id: uuid(),
-            title,
-            description: '',
-            owner: userName,
-            filepath: key,
-            likecount: 0
+        if(ImageData){
+            const pic = imgData;
+            const title = document.getElementById('title').value;
+            const tokens = await Auth.currentSession();
+            const userName = tokens.getIdToken().payload['cognito:username']
+            console.log(pic);
+            console.log(pic.length);
+            const filename = title+'_'+userName+'.'+pic[0].type.split('\/')[1]
+            console.log(filename);
+            // const { key } = await Storage.put(filename, pic, {contentType: pic.type});
+            // console.log(key);
+            // const imageInput ={
+            //     id: uuid(),
+            //     title,
+            //     description: '',
+            //     owner: userName,
+            //     filepath: key,
+            //     likecount: 0
+            // }
+            // await API.graphql(graphqlOperation(createPicture, {input: imageInput}));
         }
-        await API.graphql(graphqlOperation(createPicture, {input: imageInput}));
-
     }
     const formik = useFormik({
         initialValues: {
