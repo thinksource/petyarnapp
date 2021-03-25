@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
-import {Auth, Storage} from 'aws-amplify';
+import {Auth, graphqlOperation, API, Storage} from 'aws-amplify';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import { v4 as uuid } from 'uuid';
+import {createPicture} from '../graphql/mutations';
 import { makeStyles, unstable_createMuiStrictModeTheme } from '@material-ui/core/styles';
 import ImageUploader from 'react-images-upload';
 const useStyles = makeStyles((theme) => ({
@@ -33,21 +34,25 @@ export default function({onUpload, hiddenvalue}){
     const [imgData, setImgData] = useState();
     const uploadImg = async ()=>{
 
-        const pic = formik.pictures[0];
+        const pic = imgData;
         const title = document.getElementById('title').value;
         const tokens = await Auth.currentSession();
         const userName = tokens.getIdToken().payload['cognito:username']
         console.log(pic);
-        const filename = title+'_'+userName+'.'+pic.type.split('\/')[1]
+        console.log(pic.length);
+        const filename = title+'_'+userName+'.'+pic[0].type.split('\/')[1]
         console.log(filename);
         const { key } = await Storage.put(filename, pic, {contentType: pic.type});
+        console.log(key);
         const imageInput ={
+            id: uuid(),
             title,
+            description: '',
             owner: userName,
-            filePath: key,
-            like: 0
+            filepath: key,
+            likecount: 0
         }
-        await API.graphqlOperation()
+        await API.graphql(graphqlOperation(createPicture, {input: imageInput}));
 
     }
     const formik = useFormik({
@@ -61,10 +66,6 @@ export default function({onUpload, hiddenvalue}){
       });
     const onDrop = (picture)=>{
         console.log(picture);
-        formik.pictures = picture;
-        // // const pi= document.getElementById('testpic')
-        // // console.log(pi.data);
-        // console.log()
         setImgData(picture);
     }
     return (

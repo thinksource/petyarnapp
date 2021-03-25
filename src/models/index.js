@@ -4,10 +4,8 @@ import { schema } from './schema';
 
 
 
-const { Gallery, Picture, Like } = initSchema(schema);
+const { Picture } = initSchema(schema);
 
 export {
-  Gallery,
-  Picture,
-  Like
+  Picture
 };

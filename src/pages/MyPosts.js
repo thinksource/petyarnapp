@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import {AmplifySignOut, withAuthenticator} from '@aws-amplify/ui-react'
 import {API, graphqlOperation, Storage} from 'aws-amplify';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +10,8 @@ import Button from '@material-ui/core/Button';
 
 import {listPictures} from '../graphql/queries';
 import { Auth } from 'aws-amplify';
-import Modal from '@material-ui/core/Modal';
+// import Modal from '@material-ui/core/Modal';
+import Modal from 'react-modal';
 
 import editPicCard from '../components/editPicCard';
 import UpPicForm from '../components/UpPicForm';
@@ -44,7 +45,19 @@ const useStyles = makeStyles((theme) => ({
 
 
 function MyPosts(props){
+
+  const customStyles = {
+    content : {
+      top                   : '30%',
+      left                  : '50%',
+      right                 : '40%',
+      bottom                : '40%',
+      marginRight           : '-40%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
     const classes = useStyles();
+    const ref = createRef();
     const [piclist, setPiclist] = useState([]);
     const [open, setOpen] = useState(false);
     var userName = "";
@@ -57,14 +70,16 @@ function MyPosts(props){
       setOpen(false);
     };
 
+    const onUpload = async ()=>{
+      handleClose();
+      setPiclist(await API.graphql(graphqlOperation(listPictures, {where : {owner: {_eq: userName}}})));
+    }
+
     useEffect(()=>{
         fetchPics()
       }, []);
     const fetchPics = async (props) =>{
-        const tokens = await Auth.currentSession();
-        console.log(tokens);
-        userName = tokens.getIdToken().payload['cognito:username']
-        console.log(userName);
+
         try{
           const pictureData = await API.graphql(graphqlOperation(listPictures, {where : {owner: {_eq: userName}}}))
           const picturelist = pictureData.data.listPictures.items;
@@ -83,8 +98,10 @@ function MyPosts(props){
               <Button variant="contained" color="primary" className={classes.right} onClick={handleOpen}>
                 Upload picture
               </Button>
-              <Modal open={open} onClose={handleClose}> 
-                <UpPicForm hiddenvalue ={userName}/>
+              <Modal isOpen={open} style={customStyles}
+                onRequestClose={handleClose}> 
+                <UpPicForm onUpload={onUpload} />
+                
               </Modal>
             </div>
             <div className={classes.root}>

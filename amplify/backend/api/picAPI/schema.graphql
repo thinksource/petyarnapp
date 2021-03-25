@@ -1,24 +1,8 @@
-type Gallery @model {
-  id: ID!
-  name: String!
-  owner: String!
-  path: String!
-  posts: [Picture] @connection(keyName: "byGallery", fields: ["id"])
-}
-
-type Picture @model @key(name: "byGallery", fields: ["galleryID"]) {
+type Picture @model {
   id: ID!
   title: String!
-  galleryID: ID!
+  description: String
   owner: String!
   filepath: String!
-  Likecount: Int!
-  gallery: Gallery @connection(fields: ["galleryID"])
-  likes: [Like] @connection(keyName: "byPicture", fields: ["id"])
-}
-
-type Like @model @key(name: "byPicture", fields: ["galleryID"]) {
-  id: ID!
-  galleryID: ID!
-  gallery: Gallery @connection(fields: ["galleryID"])
+  likecount: Int!
 }
