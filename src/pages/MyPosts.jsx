@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import {listPictures} from '../graphql/queries';
 import { Auth } from 'aws-amplify';
 // import Modal from '@material-ui/core/Modal';
-import Modal from 'react-modal';
+import ReactModal from 'react-modal';
 
 import EditPicCard from '../components/EditPicCard';
 import UpPicForm from '../components/UpPicForm';
@@ -103,19 +103,20 @@ function MyPosts(props){
               <Button variant="contained" color="primary" className={classes.right} onClick={handleOpen}>
                 Upload picture
               </Button>
-              <Modal isOpen={open} style={customStyles}
-                onRequestClose={handleClose}> 
-                <UpPicForm onUpload={onUpload} />
+              <ReactModal isOpen={open} onRequestClose={handleClose}
+              appElement={document.getElementById('root')}
+              > 
+                <UpPicForm onUpload={onUpload} key="upPicForm"/>
                 
-              </Modal>
+              </ReactModal>
             </div>
             <div className={classes.root}>
             <GridList cellHeight={180} className={classes.gridList}>
             <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }}>
-                <ListSubheader component="div">My upload pictures</ListSubheader>
+                <h4>My upload pictures</h4>
             </GridListTile>
             {piclist.map((tile) => (
-                <GridListTile key={tile.img}>
+                <GridListTile key={tile.id}>
                 <EditPicCard src={tile.src} tile={tile.title} owner={tile.owner} />
                 </GridListTile>
             ))}

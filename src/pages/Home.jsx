@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import picCard from '../components/picCard';
+import PicCard from '../components/PicCard';
 import {listPictures} from '../graphql/queries';
 import {API, graphqlOperation, Storage} from 'aws-amplify';
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,7 +49,7 @@ export default function Home (porps){
             </GridListTile>
             {piclist.map((tile) => (
                 <GridListTile key={tile.img}>
-                <picCard src={tile.filepath} tile={tile.title} owner={tile.owner}  />
+                <PicCard src={tile.filepath} tile={tile.title} owner={tile.owner}  />
 
                 </GridListTile>
             ))}

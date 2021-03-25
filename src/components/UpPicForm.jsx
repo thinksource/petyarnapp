@@ -34,25 +34,27 @@ export default function({onUpload, hiddenvalue}){
     const [imgData, setImgData] = useState();
     const uploadImg = async ()=>{
         if(ImageData){
-            const pic = imgData;
+            const pic = imgData[0];
             const title = document.getElementById('title').value;
             const tokens = await Auth.currentSession();
             const userName = tokens.getIdToken().payload['cognito:username']
             console.log(pic);
-            console.log(pic.length);
-            const filename = title+'_'+userName+'.'+pic[0].type.split('\/')[1]
+            console.log(pic.size);
+            const buffer= await pic.arrayBuffer();
+            const filename = title+'_'+userName+'.'+pic.type.split('\/')[1]
             console.log(filename);
-            // const { key } = await Storage.put(filename, pic, {contentType: pic.type});
-            // console.log(key);
-            // const imageInput ={
-            //     id: uuid(),
-            //     title,
-            //     description: '',
-            //     owner: userName,
-            //     filepath: key,
-            //     likecount: 0
-            // }
-            // await API.graphql(graphqlOperation(createPicture, {input: imageInput}));
+            const { key } = await Storage.put(filename, buffer, {contentType: pic.type});
+            console.log(key);
+            const imageInput ={
+                id: uuid(),
+                title,
+                description: '',
+                owner: userName,
+                filepath: key,
+                likecount: 0
+            }
+            const result = await API.graphql(graphqlOperation(createPicture, {input: imageInput}));
+            console.log(result);
         }
     }
     const formik = useFormik({

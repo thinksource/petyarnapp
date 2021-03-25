@@ -31,7 +31,7 @@ export default function(props){
             <Typography gutterBottom variant="h5" component="h2">
               {props.title}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography variant="body2" color="secondary" component="p">
                by {props.owner}
             </Typography>
           </CardContent>
@@ -40,7 +40,7 @@ export default function(props){
           <Button size="small" color="primary">
             edit
           </Button>
-          <Button size="small" color="warning">
+          <Button size="small" color="default">
             delete
           </Button>
         </CardActions>
