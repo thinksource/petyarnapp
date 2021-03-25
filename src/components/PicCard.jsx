@@ -25,25 +25,33 @@ export default function(props){
     const [attr, setAttr] = useState(props.data);
 
     const addFavorite = async ()=>{
-      try {
       const picdata = {};
-      // picdata.description = attr.description;
-      // picdata.filepath = attr.filepath;
-      picdata.id = attr.id;
-      // picdata.owner = attr.owner;
-      // picdata.title = attr.title;
-      picdata.likecount = attr.likecount+1;
-      console.log(picdata);
-      const picupdate = await API.graphql(graphqlOperation(updatePicture, {input: picdata}));
-      console.log(picupdate);
-      picupdate.data.updatePicture.src=attr.src;
-      setAttr(picupdate.data.updatePicture);
+      try {
+        console.log(attr);
+        picdata.description = attr.description;
+        picdata.filepath = attr.filepath;
+        picdata.id = attr.id;
+        picdata.owner = attr.owner;
+        picdata.title = attr.title+" test";
+        picdata.likecount = attr.likecount+1;
+        // delete picdata.src;
+        // delete picdata.createdAt;
+        // delete picdata.updatedAt;
+        // delete picdata._deleted;
+        // delete picdata._version;
+        // delete picdata._lastChangedAt;
+        console.log(picdata);
+        const picupdate = await API.graphql(graphqlOperation(updatePicture, {input: picdata}));
+        //const picupdate = await API.graphql({ query: updatePicture, variables:{input: picdata}});
+        console.log(picupdate);
+        attr.likecount = picupdate.data.likecount;
+        setAttr(attr);
       }catch(error){
         console.log('error on adding Like to pic', error);
       }
     }
 
-    console.log(props);
+    console.log(attr);
     return (
       <Card className={classes.root}>
           

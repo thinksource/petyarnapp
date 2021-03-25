@@ -63,7 +63,7 @@ function MyPosts(props){
 
     const onUpload = async ()=>{
       handleClose();
-      setPiclist(await API.graphql(graphqlOperation(listPictures, {where : {owner: {_eq: userName}}})));
+      await fetchPics();
     }
 
     useEffect(()=>{
@@ -116,7 +116,7 @@ function MyPosts(props){
             </GridListTile>
             {piclist.map((tile) => (
                 <GridListTile key={tile.id}>
-                <EditPicCard src={tile.src} title={tile.title} owner={tile.owner} />
+                <EditPicCard data={tile} update={onUpload}/>
                 </GridListTile>
             ))}
             </GridList>

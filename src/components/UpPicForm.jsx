@@ -55,6 +55,7 @@ export default function({onUpload, hiddenvalue}){
             }
             const result = await API.graphql(graphqlOperation(createPicture, {input: imageInput}));
             console.log(result);
+            onUpload();
         }
     }
     const formik = useFormik({
