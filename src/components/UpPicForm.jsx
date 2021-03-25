@@ -43,7 +43,7 @@ export default function({onUpload, hiddenvalue}){
             const buffer= await pic.arrayBuffer();
             const filename = title+'_'+userName+'.'+pic.type.split('\/')[1]
             console.log(filename);
-            const { key } = await Storage.put(filename, buffer, {contentType: pic.type});
+            const { key } = await Storage.put(filename, buffer, {contentType: pic.type, level:'public'});
             console.log(key);
             const imageInput ={
                 id: uuid(),

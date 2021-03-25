@@ -85,12 +85,20 @@ function MyPosts(props){
           const picturelist = pictureData.data.listPictures.items;
           
           console.log('picture list', picturelist);
-          picturelist.map(async (p)=>{
-            const fileAccessURL = await Storage.get(p.filepath);
-            console.log(fileAccessURL);
-            p.src=fileAccessURL;
-          });
+          // const picarray=[];
+          for(let p of picturelist){
+            let fileAccessURL = await Storage.get(p.filepath);
+            p.src = fileAccessURL;
+            // picarray.push(p);
+          }
+          // picturelist.map(async (p)=>{
+          //   const fileAccessURL = await Storage.get(p.filepath);
+          //   console.log(fileAccessURL);
+          //   p.src=fileAccessURL;
+          // });
           setPiclist(picturelist);
+          console.log('==========');
+          console.log(piclist);
         }catch(error){
           console.log('error on fetching picture', error)
         }

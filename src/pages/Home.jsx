@@ -26,17 +26,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home (porps){
     const classes = useStyles();
-    const [piclist, setPiclist] = useState([])
+    const [piclist, setPiclist] = useState([]);
     useEffect(()=>{
         fetchPics()
       }, []);
     const fetchPics = async () =>{
         try{
-          console.log(listPictures);
+          // console.log(listPictures);
           const pictureData = await API.graphql(graphqlOperation(listPictures, {limit: 10}))
           const picturelist = pictureData.data.listPictures.items;
+
+          for(let p of picturelist){
+            let fileAccessURL = await Storage.get(p.filepath);
+            p.src = fileAccessURL;
+            // picarray.push(p);
+          }
           console.log('picture list', picturelist);
           setPiclist(picturelist);
+          console.log('==========');
+          console.log(piclist);
         }catch(error){
           console.log('error on fetching picture', error)
         }
@@ -48,7 +56,7 @@ export default function Home (porps){
                 <ListSubheader component="div">All pictures</ListSubheader>
             </GridListTile>
             {piclist.map((tile) => (
-                <GridListTile key={tile.img}>
+                <GridListTile key={tile.id}>
                 <PicCard src={tile.filepath} tile={tile.title} owner={tile.owner}  />
 
                 </GridListTile>
