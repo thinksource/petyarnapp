@@ -40,12 +40,14 @@ export default function(props){
         // delete picdata._deleted;
         // delete picdata._version;
         // delete picdata._lastChangedAt;
-        console.log(picdata);
-        const picupdate = await API.graphql(graphqlOperation(updatePicture, {input: picdata}));
-        //const picupdate = await API.graphql({ query: updatePicture, variables:{input: picdata}});
-        console.log(picupdate);
-        attr.likecount = picupdate.data.likecount;
-        setAttr(attr);
+        // console.log(picdata);
+        // const picupdate = await API.graphql(graphqlOperation(updatePicture, {input: picdata}));
+        const picupdate = await API.graphql({ query: updatePicture, variables:{input: picdata}});
+        console.log(picupdate.data.updatePicture);
+        // attr.likecount = picupdate.data.updatePicture.likecount;
+        // attr._version = picupdate.data.updatePicture._version;
+        const result = Object.assign({}, attr, picupdate.data.updatePicture);
+        setAttr(result);
       }catch(error){
         console.log('error on adding Like to pic', error);
       }
@@ -72,7 +74,7 @@ export default function(props){
         <IconButton aria-label="add to favorites" onClick={addFavorite}>
           <FavoriteIcon />
         </IconButton>
-        {attr.likecount}
+        {attr._version}
         </CardActions>
         </CardActionArea>
       </Card>

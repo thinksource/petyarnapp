@@ -22,12 +22,12 @@ export default function(props){
     const deletePicture = async ()=>{
       const result= await Storage.remove(attr.filepath);
       console.log(result);
-      const deleteitem = {}
-      deleteitem.id = attr.id;
+      const deleteitem = {id: attr.id};
       console.log(deleteitem);
       delete attr.createdAt;
       delete attr.updatedAt;
       const dbres = await API.graphql({ query: mutations.deletePicture, variables: {input: deleteitem}});
+      console.log(dbres);
       props.update();
     }
 

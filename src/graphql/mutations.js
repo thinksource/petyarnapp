@@ -13,9 +13,6 @@ export const createPicture = /* GraphQL */ `
       owner
       filepath
       likecount
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -33,9 +30,6 @@ export const updatePicture = /* GraphQL */ `
       owner
       filepath
       likecount
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -53,9 +47,6 @@ export const deletePicture = /* GraphQL */ `
       owner
       filepath
       likecount
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
