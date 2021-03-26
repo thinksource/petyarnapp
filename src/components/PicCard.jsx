@@ -32,14 +32,8 @@ export default function(props){
         picdata.filepath = attr.filepath;
         picdata.id = attr.id;
         picdata.owner = attr.owner;
-        picdata.title = attr.title+" test";
+        picdata.title = attr.title;
         picdata.likecount = attr.likecount+1;
-        // delete picdata.src;
-        // delete picdata.createdAt;
-        // delete picdata.updatedAt;
-        // delete picdata._deleted;
-        // delete picdata._version;
-        // delete picdata._lastChangedAt;
         // console.log(picdata);
         // const picupdate = await API.graphql(graphqlOperation(updatePicture, {input: picdata}));
         const picupdate = await API.graphql({ query: updatePicture, variables:{input: picdata}});
@@ -74,7 +68,7 @@ export default function(props){
         <IconButton aria-label="add to favorites" onClick={addFavorite}>
           <FavoriteIcon />
         </IconButton>
-        {attr._version}
+        {attr.likecount}
         </CardActions>
         </CardActionArea>
       </Card>

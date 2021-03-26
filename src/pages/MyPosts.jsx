@@ -51,7 +51,7 @@ function MyPosts(props){
     const ref = createRef();
     const [piclist, setPiclist] = useState([]);
     const [open, setOpen] = useState(false);
-    var userName = "";
+    var [userName, setUserName] = useState("");
     const handleOpen = () => {
       setOpen(true);
       console.log(open);
@@ -68,11 +68,14 @@ function MyPosts(props){
 
     useEffect(()=>{
         fetchPics()
-      }, []);
+      }, [userName]);
     const fetchPics = async (props) =>{
 
         try{
-          const pictureData = await API.graphql(graphqlOperation(listPictures, {where : {owner: {_eq: userName}}}))
+          const tokens = await Auth.currentSession();
+          setUserName(tokens.getIdToken().payload['cognito:username']);
+          const filter ={ owner: {eq: userName}}
+          const pictureData = await API.graphql({query: listPictures, variables : {filter: filter}})
           const picturelist = pictureData.data.listPictures.items;
           
           console.log('picture list', picturelist);
@@ -89,6 +92,7 @@ function MyPosts(props){
           // });
           setPiclist(picturelist);
           console.log('==========');
+          console.log('userName:', userName);
           console.log(piclist);
         }catch(error){
           console.log('error on fetching picture', error)

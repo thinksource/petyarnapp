@@ -1,10 +1,45 @@
 # Getting Started with Create React App
 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Configure backend
+
+Create aws-exports.js and inside the aws-exports.js:
+
+```
+const awsmobile = {
+    "aws_project_region": "us-west-2",
+    "aws_cognito_identity_pool_id": "XXXXXXXXX",
+    "aws_cognito_region": "us-west-2",
+    "aws_user_pools_id": "us-west-2_XXXXXX",
+    "aws_user_pools_web_client_id": "XXXXXXXX",
+    "oauth": {},
+    "aws_appsync_graphqlEndpoint": "https://XXXXXXXXXX.appsync-api.us-west-2.amazonaws.com/graphql",
+    "aws_appsync_region": "us-west-2",
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
+    "aws_user_files_s3_bucket": "picture-XXXXXXX-dev",
+    "aws_user_files_s3_bucket_region": "us-west-2"
+};
+```
+or you can also use
+
+### 'amplify init'
+### 'amplify add api'
+### 'amplify add auth'
+### 'amplify add storage'
+
+To build your own network.
+
+
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+
+### `yarn install`
 
 ### `yarn start`
 
