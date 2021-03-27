@@ -1,4 +1,9 @@
-type Picture @model {
+type Picture @model
+  @auth(rules: [
+    { allow: owner, ownerField: "owner" },
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] }
+  ]) {
   id: ID!
   title: String!
   description: String

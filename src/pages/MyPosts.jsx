@@ -95,7 +95,7 @@ function MyPosts(props){
           console.log('userName:', userName);
           console.log(piclist);
         }catch(error){
-          console.log('error on fetching picture', error)
+          console.log('error at myPost fetch picture', error)
         }
       }
 
