@@ -1,8 +1,8 @@
 type Picture @model
   @auth(rules: [
     { allow: owner, ownerField: "owner" },
-    { allow: public, operations: [read] },
-    { allow: private, operations: [read] }
+    { allow: public, operations: [read, update] },
+    { allow: private, operations: [read, update] }
   ]) {
   id: ID!
   title: String!
